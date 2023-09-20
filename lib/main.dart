@@ -11,11 +11,11 @@ Future<void> main() async {
     nodeUri: (nodeUri.isNotEmpty) ? Uri.parse(nodeUri) : infuraGoerliTestnetUri,
   );
 
-  runApp(const StarknetDemoApp());
+  runApp(const StarknetWalletApp());
 }
 
-class StarknetDemoApp extends StatelessWidget {
-  const StarknetDemoApp({super.key});
+class StarknetWalletApp extends StatelessWidget {
+  const StarknetWalletApp({super.key});
 
   @override
   Widget build(BuildContext context) {
