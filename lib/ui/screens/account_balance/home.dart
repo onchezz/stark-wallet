@@ -2,16 +2,6 @@ import 'package:account_connect/ui/screens/account_balance/widgets/account_indic
 import 'package:account_connect/ui/widgets/bouncing_button.dart';
 import 'package:flutter/material.dart';
 import 'package:starknet_flutter/starknet_flutter.dart';
-// import 'package:starknet_flutter_example/ui/screens/account_balance/widgets/account_address.dart';
-// import 'package:starknet_flutter_example/ui/screens/account_balance/widgets/account_indicator.dart';
-// import 'package:starknet_flutter_example/ui/screens/account_balance/widgets/account_not_deployed.dart';
-// import 'package:starknet_flutter_example/ui/screens/account_balance/widgets/action_button.dart';
-// import 'package:starknet_flutter_example/ui/screens/account_balance/widgets/crypto_balance_cell.dart';
-// import 'package:starknet_flutter_example/ui/screens/account_balance/widgets/empty_wallet.dart';
-// import 'package:starknet_flutter_example/ui/screens/account_balance/widgets/no_account_selected.dart';
-// import 'package:starknet_flutter_example/ui/widgets/bouncing_button.dart';
-// import 'package:starknet_flutter_example/ui/widgets/loading.dart';
-
 import '../../widgets/loading.dart';
 import 'home_presenter.dart';
 import 'home_viewmodel.dart';
