@@ -1,4 +1,5 @@
 import 'package:counter/contract_service.dart';
+import 'package:counter/counter_service.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -32,24 +33,32 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  _getCounter() async {
-    int count = await getBalance();
+  int _totalBalance = 0;
+  int _relayerBal = 0;
+  _getTotalBalance() async {
+    int bal = await getTotalBalance();
+    await increaseCounter();
+    await getSignerBal();
     setState(() {
-      _counter = count;
-      // _counter++;
+      _totalBalance = bal;
     });
+  }
+
+  _getPersonalBal() async {
+    int bal = await getRelayerBalance();
+    setState(() {
+      _relayerBal = bal;
+    });
+  }
+
+  _regesterUser() async {
+    int amount = 10;
+    bool res = await regesteringUser(amount);
+    return res;
   }
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
@@ -59,27 +68,48 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
+            Row(
+              children: [
+                Text("Available Total liquidity balance is : $_totalBalance"),
+                const SizedBox(
+                  width: 20,
+                ),
+                Text("relayer balance is : $_relayerBal"),
+              ],
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
+            const SizedBox(
+              height: 20,
             ),
-            FloatingActionButton(
-              onPressed: (() => getBalance()),
-              child: const Text('get balance '),
-            )
+            ElevatedButton(
+                onPressed: (() => _getTotalBalance()),
+                child: const Text('get all bal')),
+            const SizedBox(
+              height: 20,
+            ),
+            ElevatedButton(
+                onPressed: (() => _regesterUser()),
+                child: const Text('regester user')),
+            const SizedBox(
+              height: 20,
+            ),
+            ElevatedButton(
+                onPressed: (() => _getPersonalBal()),
+                child: const Text('get relayer bal')),
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: _incrementCounter,
+      //   tooltip: 'Increment',
+      //   child: const Icon(Icons.add),
+      // ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 
-  void _incrementCounter() {}
+  // void _incrementCounter() async {
+  //   await increaseCounter();
+  //   setState(() {});
+  // }
+
+  // _decrementingCounter() {}
 }

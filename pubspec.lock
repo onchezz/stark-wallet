@@ -369,7 +369,7 @@ packages:
     source: hosted
     version: "1.1.0"
   http:
-    dependency: transitive
+    dependency: "direct overridden"
     description:
       name: http
       sha256: "759d1a329847dd0f39226c688d3e06a6b8679668e350e2891a6474f8b4bb8525"
@@ -505,7 +505,7 @@ packages:
     source: hosted
     version: "2.1.0"
   path:
-    dependency: transitive
+    dependency: "direct overridden"
     description:
       name: path
       sha256: "8829d8a55c13fc0e37127c29fedf290c102f4e40ae94ada574091fe0ff96c917"
@@ -696,19 +696,12 @@ packages:
   starknet:
     dependency: "direct main"
     description:
-      name: starknet
-      sha256: "6504af2a42d3ba421c117a5f30f3e79aa2d69ede3b840a24de0f35eb1ea2962d"
-      url: "https://pub.dev"
-    source: hosted
+      path: "packages/starknet"
+      ref: focustree
+      resolved-ref: "4564fd4ba25481283c0b14be10e699f633782fe5"
+      url: "https://github.com/focustree/starknet.dart"
+    source: git
     version: "0.1.0"
-  starknet_builder:
-    dependency: "direct main"
-    description:
-      name: starknet_builder
-      sha256: "76c817abc2d408020e86520af47bec0596f5296a80ac470b30dd784d3707b126"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.0.1"
   starknet_flutter:
     dependency: "direct main"
     description:
@@ -717,6 +710,15 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.1.2"
+  starknet_provider:
+    dependency: "direct main"
+    description:
+      path: "packages/starknet_provider"
+      ref: focustree
+      resolved-ref: "4564fd4ba25481283c0b14be10e699f633782fe5"
+      url: "https://github.com/focustree/starknet.dart"
+    source: git
+    version: "1.0.0"
   stream_channel:
     dependency: transitive
     description:
