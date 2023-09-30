@@ -1,4 +1,4 @@
-// import 'package:counter/ui/counter.dart';
+import 'package:counter/ui/counter.dart';
 import 'package:counter/ui/relayer.dart';
 import 'package:flutter/material.dart';
 
@@ -18,8 +18,8 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const Relayer(),
-      // home: const MyHomePage(title: 'Flutter Starknet'),
+      // home: const Relayer(),
+      home: const MyHomePage(title: 'Flutter Starknet'),
     );
   }
 }

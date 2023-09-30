@@ -16,7 +16,6 @@ class _MyHomePageState extends State<MyHomePage> {
   _increaseCount() async {
     await increaseCounter();
     setState(() {
-      amount.clear();
       _getCounter();
     });
   }
@@ -25,6 +24,7 @@ class _MyHomePageState extends State<MyHomePage> {
     await increaseCounterBy(amount.text.trim());
     setState(() {
       _getCounter();
+      amount.clear();
     });
   }
 
@@ -51,6 +51,7 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: Center(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             const SizedBox(
               height: 20,
@@ -68,6 +69,9 @@ class _MyHomePageState extends State<MyHomePage> {
                   hintText: 'Enter your Amount',
                 ),
               ),
+            ),
+            const SizedBox(
+              height: 20,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
