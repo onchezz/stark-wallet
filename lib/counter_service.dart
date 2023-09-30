@@ -3,7 +3,7 @@
 import 'package:starknet/starknet.dart';
 import 'package:starknet_provider/starknet_provider.dart';
 
-final provider =JsonRpcProvider(
+final provider = JsonRpcProvider(
     nodeUri: Uri.parse(
         'https://starknet-goerli.infura.io/v3/9fe2088d204c4289bd9ed7e457cbbd67'));
 final contractAddress =
@@ -29,7 +29,7 @@ final signeraccount = getAccount(
 //   ),
 // );
 
-Future<int> getBalance() async {
+Future<int> getCurrentCount() async {
   final result = await provider.call(
     request: FunctionCall(
         contractAddress: Felt.fromHexString(contractAddress),
@@ -43,7 +43,7 @@ Future<int> getBalance() async {
   );
 }
 
-Future<bool> increaseCounter() async {
+increaseCounter() async {
   print('print increment');
   final response = await signeraccount.execute(functionCalls: [
     FunctionCall(
@@ -57,5 +57,26 @@ Future<bool> increaseCounter() async {
     result: (result) => result.transaction_hash,
     error: (err) => throw Exception("Failed to execute"),
   );
-  return waitForAcceptance(transactionHash: txHash, provider: provider);
+
+  print('$txHash');
+  // return waitForAcceptance(transactionHash: txHash, provider: provider);
+}
+
+decreaseCounter() async {
+  print('decrementing.....');
+  final response = await signeraccount.execute(functionCalls: [
+    FunctionCall(
+      contractAddress: Felt.fromHexString(contractAddress),
+      entryPointSelector: getSelectorByName("decr"),
+      calldata: [],
+    ),
+  ]);
+
+  final txHash = response.when(
+    result: (result) => result.transaction_hash,
+    error: (err) => throw Exception("Failed to execute"),
+  );
+
+  print('$txHash');
+  // return waitForAcceptance(transactionHash: txHash, provider: provider);
 }

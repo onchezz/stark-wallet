@@ -10,13 +10,13 @@ final secretAccountAddress =
     "0x00ce7b8175e1aed7e087f44e63051c053cda012d5f63fdd1e95e82489925ff41";
 final secretAccountPrivateKey =
     "0x06a1b5d41b7e5fee4310fda61d7c1b11e039f4681424cc89e1e8bfffe1ed9926";
-final signeraccount = getAccount(
+final signerAccount = getAccount(
   accountAddress: Felt.fromHexString(secretAccountAddress),
   privateKey: Felt.fromHexString(secretAccountPrivateKey),
   nodeUri: infuraGoerliTestnetUri,
 );
 
-Future<int> getTotalBalance() async {
+getTotalBalance() async {
   final result = await provider.call(
     request: FunctionCall(
         contractAddress: Felt.fromHexString(contractAddress),
@@ -30,7 +30,7 @@ Future<int> getTotalBalance() async {
   );
 }
 
-Future<int> getRelayerBalance() async {
+ getRelayerBalance() async {
   final result = await provider.call(
     request: FunctionCall(
         contractAddress: Felt.fromHexString(contractAddress),
@@ -44,35 +44,35 @@ Future<int> getRelayerBalance() async {
   );
 }
 
-Future<Uint256> getSignerBal() async {
-  Uint256 signerBal = await signeraccount.balance();
+ getSignerBal() async {
+  Uint256 signerBal = await signerAccount.balance();
 
   return signerBal;
 }
 
-Future<bool> regesteringUser(int amount) async {
-  Account signerAccount() {
-    return Account(
-      supportedTxVersion: AccountSupportedTxVersion.v1,
-      accountAddress: Felt.fromHexString(
-          '0x01C5C8f8bA12AC2B24F45C6cFCdc7965e01cA8684dd2d02FcBd1B4F8A09aC857'),
-      chainId: Felt.fromString('SN_GOERLI'),
-      provider: provider,
-      signer: Signer(
-        privateKey: Felt.fromHexString(
-            '0x01e37d9210176d9c8a8c027240e7cc661ccf90a7c64c1527fa0120da27b844f9'),
-      ),
-    );
-  }
+ regesteringUser(String amount) async {
+  // Account signerAccount() {
+  //   return Account(
+  //     supportedTxVersion: AccountSupportedTxVersion.v1,
+  //     accountAddress: Felt.fromHexString(
+  //         '0x01C5C8f8bA12AC2B24F45C6cFCdc7965e01cA8684dd2d02FcBd1B4F8A09aC857'),
+  //     chainId: Felt.fromString('SN_GOERLI'),
+  //     provider: provider,
+  //     signer: Signer(
+  //       privateKey: Felt.fromHexString(
+  //           '0x01e37d9210176d9c8a8c027240e7cc661ccf90a7c64c1527fa0120da27b844f9'),
+  //     ),
+  //   );
+  // }
 
-  final account = signerAccount();
-  final balance = signerAccount().balance();
+  // final account = signerAccount();
+  // final balance = signerAccount().balance();
 
-  final res = await account.execute(functionCalls: [
+  final res = await signerAccount.execute(functionCalls: [
     FunctionCall(
       contractAddress: Felt.fromHexString(contractAddress),
       entryPointSelector: getSelectorByName(''),
-      calldata: [Felt.fromInt(amount)],
+      calldata: [Felt.fromIntString(amount)],
     )
   ]);
 
@@ -83,13 +83,13 @@ Future<bool> regesteringUser(int amount) async {
   // }
 
   print('regstering');
-  final response = await signeraccount.execute(functionCalls: [
-    FunctionCall(
-      contractAddress: Felt.fromHexString(contractAddress),
-      entryPointSelector: getSelectorByName("register"),
-      calldata: [Felt.fromInt(amount)],
-    ),
-  ]);
+  // final response = await signerAccount.execute(functionCalls: [
+  //   FunctionCall(
+  //     contractAddress: Felt.fromHexString(contractAddress),
+  //     entryPointSelector: getSelectorByName("register"),
+  //     calldata: [Felt.fromInt(amount)],
+  //   ),
+  // ]);
 
   final txHash = res.when(
     result: (result) => result.transaction_hash,
