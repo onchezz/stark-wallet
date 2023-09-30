@@ -49,7 +49,7 @@ Future<String>increaseCounter() async {
     error: (err) => throw Exception("Failed to execute"),
   );
 
-  print('$txHash');
+  print('printing increment TX : $txHash');
   return txHash;
   // return waitForAcceptance(transactionHash: txHash, provider: provider);
 }
@@ -69,7 +69,7 @@ Future<String> increaseCounterBy(String number) async {
     error: (err) => throw Exception("Failed to execute"),
   );
 
-  print('$txHash');
+  print('printing incrementby amount TX : $txHash');
   return txHash;
   // return waitForAcceptance(transactionHash: txHash, provider: provider);
 }
@@ -88,7 +88,7 @@ Future<String> decreaseCounter() async {
     result: (result) => result.transaction_hash,
     error: (err) => throw Exception("Failed to execute"),
   );
-  print('$txHash');
+  print('printing decrement TX : $txHash');
   return txHash;
   // return waitForAcceptance(transactionHash: txHash, provider: provider);
 }
