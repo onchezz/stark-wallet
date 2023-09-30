@@ -698,8 +698,8 @@ packages:
     description:
       path: "packages/starknet"
       ref: focustree
-      resolved-ref: "4564fd4ba25481283c0b14be10e699f633782fe5"
-      url: "https://github.com/focustree/starknet.dart"
+      resolved-ref: "9eff6bbff300b5bfaceaff857c2603690ef65175"
+      url: "https://github.com/gabsn/starknet.dart"
     source: git
     version: "0.1.0"
   starknet_flutter:
@@ -715,8 +715,8 @@ packages:
     description:
       path: "packages/starknet_provider"
       ref: focustree
-      resolved-ref: "4564fd4ba25481283c0b14be10e699f633782fe5"
-      url: "https://github.com/focustree/starknet.dart"
+      resolved-ref: "9eff6bbff300b5bfaceaff857c2603690ef65175"
+      url: "https://github.com/gabsn/starknet.dart"
     source: git
     version: "1.0.0"
   stream_channel:

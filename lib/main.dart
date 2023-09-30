@@ -35,9 +35,32 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _totalBalance = 0;
   int _relayerBal = 0;
+  int counter = 0;
+
+  _increaseCount() async {
+    await increaseCounter();
+    setState(() {
+      _getCounter();
+    });
+  }
+
+  _decreaseCount() async {
+    await decreaseCounter();
+    setState(() {
+      _getCounter();
+    });
+  }
+
+  _getCounter() async {
+    int balcounter = await getCurrentCount();
+    setState(() {
+      counter = balcounter;
+    });
+  }
+
   _getTotalBalance() async {
     int bal = await getTotalBalance();
-    await increaseCounter();
+
     await getSignerBal();
     setState(() {
       _totalBalance = bal;
@@ -52,7 +75,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   _regesterUser() async {
-    int amount = 10;
+    String amount = '100';
     bool res = await regesteringUser(amount);
     return res;
   }
@@ -66,9 +89,37 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            const SizedBox(
+              height: 20,
+            ),
+            Text("Counter is  : $counter"),
+            const SizedBox(
+              height: 20,
+            ),
             Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                    onPressed: _increaseCount, child: const Text('increment')),
+                const SizedBox(
+                  width: 20,
+                ),
+                ElevatedButton(
+                    onPressed: (() => _getCounter()),
+                    child: const Text('get count')),
+                const SizedBox(
+                  width: 20,
+                ),
+                ElevatedButton(
+                    onPressed: _decreaseCount, child: const Text('decrement')),
+              ],
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text("Available Total liquidity balance is : $_totalBalance"),
                 const SizedBox(
@@ -78,31 +129,37 @@ class _MyHomePageState extends State<MyHomePage> {
               ],
             ),
             const SizedBox(
-              height: 20,
+              width: 20,
             ),
-            ElevatedButton(
-                onPressed: (() => _getTotalBalance()),
-                child: const Text('get all bal')),
-            const SizedBox(
-              height: 20,
-            ),
-            ElevatedButton(
-                onPressed: (() => _regesterUser()),
-                child: const Text('regester user')),
-            const SizedBox(
-              height: 20,
-            ),
-            ElevatedButton(
-                onPressed: (() => _getPersonalBal()),
-                child: const Text('get relayer bal')),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                    onPressed: (() => _getTotalBalance()),
+                    child: const Text('get all bal')),
+                const SizedBox(
+                  width: 20,
+                ),
+                ElevatedButton(
+                    onPressed: (() => _regesterUser()),
+                    child: const Text('regester user')),
+                const SizedBox(
+                  width: 20,
+                ),
+                ElevatedButton(
+                    onPressed: (() => _getPersonalBal()),
+                    child: const Text('get relayer bal')),
+              ],
+            )
           ],
         ),
       ),
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: _incrementCounter,
-      //   tooltip: 'Increment',
-      //   child: const Icon(Icons.add),
-      // ), // This trailing comma makes auto-formatting nicer for build methods.
+
+      floatingActionButton: FloatingActionButton(
+        onPressed: _increaseCount,
+        tooltip: 'Increment',
+        child: const Icon(Icons.add),
+      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 
