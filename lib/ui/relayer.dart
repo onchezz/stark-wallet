@@ -11,6 +11,7 @@ class Relayer extends StatefulWidget {
 class _RelayerState extends State<Relayer> {
   int _totalBalance = 0;
   int _relayerBal = 0;
+  TextEditingController _amount = TextEditingController();
   _getTotalBalance() async {
     int bal = await getTotalBalance();
 
@@ -28,9 +29,9 @@ class _RelayerState extends State<Relayer> {
   }
 
   _regesterUser() async {
-    String amount = '100';
-    bool res = await regesteringUser(amount);
-    return res;
+    String amount = _amount.text.trim();
+    await regesteringUser(amount);
+    _amount.clear();
   }
 
   @override
@@ -40,21 +41,31 @@ class _RelayerState extends State<Relayer> {
       child: Column(
         children: [
           const SizedBox(
-              height: 20,
+            height: 20,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text("Available Total liquidity balance is : $_totalBalance"),
+              const SizedBox(
+                width: 20,
+              ),
+              Text("relayer balance is : $_relayerBal"),
+            ],
+          ),
+          const SizedBox(
+            width: 20,
+          ),
+          SizedBox(
+            width: 500,
+            child: TextField(
+              controller: _amount,
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+                hintText: 'Enter your Amount',
+              ),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text("Available Total liquidity balance is : $_totalBalance"),
-                const SizedBox(
-                  width: 20,
-                ),
-                Text("relayer balance is : $_relayerBal"),
-              ],
-            ),
-            const SizedBox(
-              width: 20,
-            ),
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
