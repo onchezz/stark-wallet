@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_declarations
+// ignore_for_file: prefer_const_declarations, avoid_print
 
 import 'package:starknet/starknet.dart';
 import 'package:starknet_provider/starknet_provider.dart';
@@ -7,7 +7,8 @@ final provider = JsonRpcProvider(
     nodeUri: Uri.parse(
         'https://starknet-goerli.infura.io/v3/9fe2088d204c4289bd9ed7e457cbbd67'));
 final contractAddress =
-    '0x076b4f19561a3c48f13aa3cb912ad92c0e702270466668ec9d77513ba6c5b0e2';
+    '0x716ea2ba1dc8f1e7f9faad442a109adebe4a80a2ec0c937c7e84aca58136859';
+// final contractAddress ='0x076b4f19561a3c48f13aa3cb912ad92c0e702270466668ec9d77513ba6c5b0e2';
 final secretAccountAddress =
     "0x00ce7b8175e1aed7e087f44e63051c053cda012d5f63fdd1e95e82489925ff41";
 final secretAccountPrivateKey =
@@ -19,21 +20,11 @@ final signeraccount = getAccount(
       'https://starknet-goerli.infura.io/v3/9fe2088d204c4289bd9ed7e457cbbd67'),
 );
 
-// final mySignerAccount = Account(
-//   supportedTxVersion: AccountSupportedTxVersion.v1,
-//   accountAddress: Felt.fromHexString(secretAccountAddress),
-//   chainId: Felt.fromString('SN_GOERLI'),
-//   provider: provider,
-//   signer: Signer(
-//     privateKey: Felt.fromHexString(secretAccountPrivateKey),
-//   ),
-// );
-
 Future<int> getCurrentCount() async {
   final result = await provider.call(
     request: FunctionCall(
         contractAddress: Felt.fromHexString(contractAddress),
-        entryPointSelector: getSelectorByName("curr"),
+        entryPointSelector: getSelectorByName("get_current_count"),
         calldata: []),
     blockId: BlockId.latest,
   );
@@ -43,12 +34,12 @@ Future<int> getCurrentCount() async {
   );
 }
 
-increaseCounter() async {
+Future<String>increaseCounter() async {
   print('print increment');
   final response = await signeraccount.execute(functionCalls: [
     FunctionCall(
       contractAddress: Felt.fromHexString(contractAddress),
-      entryPointSelector: getSelectorByName("incr"),
+      entryPointSelector: getSelectorByName("increment"),
       calldata: [],
     ),
   ]);
@@ -59,15 +50,36 @@ increaseCounter() async {
   );
 
   print('$txHash');
+  return txHash;
   // return waitForAcceptance(transactionHash: txHash, provider: provider);
 }
 
-decreaseCounter() async {
+Future<String> increaseCounterBy(int number) async {
+  print('print increment');
+  final response = await signeraccount.execute(functionCalls: [
+    FunctionCall(
+      contractAddress: Felt.fromHexString(contractAddress),
+      entryPointSelector: getSelectorByName("increase_count_by"),
+      calldata: [Felt.fromInt(number)],
+    ),
+  ]);
+
+  final txHash = response.when(
+    result: (result) => result.transaction_hash,
+    error: (err) => throw Exception("Failed to execute"),
+  );
+
+  print('$txHash');
+  return txHash;
+  // return waitForAcceptance(transactionHash: txHash, provider: provider);
+}
+
+Future<String> decreaseCounter() async {
   print('decrementing.....');
   final response = await signeraccount.execute(functionCalls: [
     FunctionCall(
       contractAddress: Felt.fromHexString(contractAddress),
-      entryPointSelector: getSelectorByName("decr"),
+      entryPointSelector: getSelectorByName("decrement"),
       calldata: [],
     ),
   ]);
@@ -76,7 +88,7 @@ decreaseCounter() async {
     result: (result) => result.transaction_hash,
     error: (err) => throw Exception("Failed to execute"),
   );
-
   print('$txHash');
+  return txHash;
   // return waitForAcceptance(transactionHash: txHash, provider: provider);
 }
