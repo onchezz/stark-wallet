@@ -54,13 +54,13 @@ Future<String>increaseCounter() async {
   // return waitForAcceptance(transactionHash: txHash, provider: provider);
 }
 
-Future<String> increaseCounterBy(int number) async {
-  print('print increment');
+Future<String> increaseCounterBy(String number) async {
+  print('print increment by ');
   final response = await signeraccount.execute(functionCalls: [
     FunctionCall(
       contractAddress: Felt.fromHexString(contractAddress),
       entryPointSelector: getSelectorByName("increase_count_by"),
-      calldata: [Felt.fromInt(number)],
+      calldata: [Felt.fromIntString(number)],
     ),
   ]);
 

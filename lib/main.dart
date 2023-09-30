@@ -1,4 +1,3 @@
-import 'package:counter/services/relayer_service.dart';
 import 'package:counter/services/counter_service.dart';
 import 'package:flutter/material.dart';
 
@@ -13,7 +12,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Flutter Startnet Counter',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
@@ -33,16 +32,20 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
- 
   int counter = 0;
-
+  TextEditingController amount = TextEditingController();
   _increaseCount() async {
     await increaseCounter();
     setState(() {
       _getCounter();
     });
   }
-
+_increaseCountBy() async {
+    await increaseCounterBy(amount.text.trim());
+    setState(() {
+      _getCounter();
+    });
+  }
   _decreaseCount() async {
     await decreaseCounter();
     setState(() {
@@ -57,7 +60,6 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
- 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -75,11 +77,26 @@ class _MyHomePageState extends State<MyHomePage> {
             const SizedBox(
               height: 20,
             ),
+            SizedBox(
+              width: 500,
+              child: TextField(
+                controller: amount,
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  hintText: 'Enter your Amount',
+                ),
+              ),
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ElevatedButton(
                     onPressed: _increaseCount, child: const Text('increment')),
+                const SizedBox(
+                  width: 20,
+                ),
+                ElevatedButton(
+                    onPressed: _increaseCountBy, child: const Text('incrementBy')),
                 const SizedBox(
                   width: 20,
                 ),
@@ -93,12 +110,9 @@ class _MyHomePageState extends State<MyHomePage> {
                     onPressed: _decreaseCount, child: const Text('decrement')),
               ],
             ),
-            
-       ],
+          ],
         ),
       ),
     );
   }
-
-
 }
