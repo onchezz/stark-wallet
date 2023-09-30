@@ -106,6 +106,33 @@ Future<String> depositTokens(String amount) async {
   return txHash;
   // return waitForAcceptance(transactionHash: txHash, provider: provider);
 }
+
+Future<String> transferTokens(String amount, String senderAddress, String receiverAddress) async {
+  print('Trasfering  Tokens.....');
+  
+  final res = await signerAccount.execute(functionCalls: [
+    FunctionCall(
+      contractAddress: Felt.fromHexString(contractAddress),
+      entryPointSelector: getSelectorByName('withdraw'),
+      calldata: [Felt.fromIntString(amount),Felt.fromHexString(senderAddress),Felt.fromHexString(receiverAddress)],
+    )
+  ]);
+
+ 
+  print( 
+      res.when(
+        result: (result) => result.toString(),
+        error: (error) => throw Exception(error),
+      ));
+
+  final txHash = res.when(
+    result: (result) => result.transaction_hash,
+    error: (err) => throw Exception("Failed to execute"),
+  );
+  print('Transfer Tokens transaction result:$txHash');
+  return txHash;
+  // return waitForAcceptance(transactionHash: txHash, provider: provider);
+}
 Future<String> withdrawTokens(String amount) async {
   print('withdrawing Tokens.....');
   
