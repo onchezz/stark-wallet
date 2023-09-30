@@ -30,8 +30,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   _decreaseCount() async {
     await decreaseCounter();
-    setState(() {
-      _getCounter();
+    setState(() async {
+      await _getCounter();
     });
   }
 
