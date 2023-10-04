@@ -69,6 +69,6 @@ jobs:
     
 #       - name: Run tests
 #         run: dart test
-#       - name: Flutter Deployment
-#         uses: jeanluc243/Flutter-Deployment@0.1
+      - name: Flutter Deployment
+        uses: jeanluc243/Flutter-Deployment@0.1
  
