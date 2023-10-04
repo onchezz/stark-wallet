@@ -1,0 +1,74 @@
+name: Release Flutter and Dart apps
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Flutter
+        uses: actions/setup-flutter@v3
+
+      - name: Build Flutter app
+        run: flutter build appbundle
+
+      - name: Create release
+        uses: actions/create-release@v3
+        with:
+          tag_name: ${{ github.ref_name }}
+          release_name: Flutter and Dart app release
+          body: This is a release of the Flutter and Dart app.
+          draft: false
+
+      - name: Upload release assets
+        uses: actions/upload-artifact@v3
+        with:
+          name: release-assets
+          path: build/app/outputs/apk/release/app-release.apk
+
+# # This workflow uses actions that are not certified by GitHub.
+# # They are provided by a third-party and are governed by
+# # separate terms of service, privacy policy, and support
+# # documentation.
+
+# name: Dart
+
+# on:
+#   push:
+#     branches: [ "master" ]
+#   pull_request:
+#     branches: [ "master" ]
+
+# jobs:
+#   build:
+#     runs-on: ubuntu-latest
+
+#     steps:
+#       - uses: actions/checkout@v3
+
+#       # Note: This workflow uses the latest stable version of the Dart SDK.
+#       # You can specify other versions if desired, see documentation here:
+#       # https://github.com/dart-lang/setup-dart/blob/main/README.md
+#       # - uses: dart-lang/setup-dart@v1
+#       - uses: dart-lang/setup-dart@9a04e6d73cca37bd455e0608d7e5092f881fd603
+
+#       - name: Install dependencies
+#         run: dart pub get
+
+      
+#       # Consider passing '--fatal-infos' for slightly stricter analysis.
+#       - name: Analyze project source
+#         run: dart analyze
+
+    
+#       - name: Run tests
+#         run: dart test
+#       - name: Flutter Deployment
+#         uses: jeanluc243/Flutter-Deployment@0.1
+ 
